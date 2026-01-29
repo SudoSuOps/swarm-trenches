@@ -1,0 +1,20 @@
+# SwarmCode Synth Configuration
+# Use: swarmcode synth --config configs/synth.yaml ./data/snapshots/your-repo
+
+snapshot_dir: "./data/snapshots/your-repo"
+output_path: "./data/training.jsonl"
+
+min_diff_lines: 3
+max_diff_lines: 500
+max_context_files: 10
+include_tests: true
+
+task_templates:
+  - "Fix the bug in {file}"
+  - "Implement {function} in {file}"
+  - "Refactor {function} to improve readability"
+  - "Add error handling to {function}"
+  - "Write unit tests for {file}"
+  - "Add input validation to {function}"
+  - "Optimize the performance of {function}"
+  - "Add documentation to {function}"

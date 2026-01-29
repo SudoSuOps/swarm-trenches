@@ -1,0 +1,15 @@
+# SwarmCode Publish Configuration
+# Use: swarmcode publish --config configs/publish.yaml ./artifacts/swarmcode_adapter
+
+adapter_path: "./artifacts/swarmcode_adapter"
+manifest_output: "./artifacts/manifest.json"
+name: "swarmcode-agent"
+version: "0.1.0"
+description: "SwarmCode coding agent fine-tuned on your codebase"
+author: "your-name"
+
+# Optional: EIP-191 signing key (hex format without 0x prefix)
+# private_key: "your-private-key-here"
+
+# IPFS gateway for uploading (local node or Infura/Pinata)
+ipfs_gateway: "http://localhost:5001"

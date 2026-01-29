@@ -1,0 +1,92 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "swarmcode"
+version = "0.1.0"
+description = "Local-first specialized coding agent training and runtime system"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [
+    { name = "SwarmCode Team" }
+]
+keywords = ["ai", "coding-agent", "llm", "fine-tuning", "qlora"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "fastapi>=0.109.0",
+    "uvicorn>=0.27.0",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    "httpx>=0.26.0",
+    "gitpython>=3.1.40",
+    "pyyaml>=6.0.1",
+    "aiofiles>=23.2.1",
+    "python-multipart>=0.0.6",
+]
+
+[project.optional-dependencies]
+train = [
+    "torch>=2.1.0",
+    "transformers>=4.36.0",
+    "peft>=0.7.0",
+    "accelerate>=0.25.0",
+    "datasets>=2.16.0",
+    "bitsandbytes>=0.42.0",
+    "trl>=0.7.0",
+    "wandb>=0.16.0",
+]
+parser = [
+    "tree-sitter>=0.20.0",
+    "tree-sitter-python>=0.20.0",
+    "tree-sitter-javascript>=0.20.0",
+    "tree-sitter-typescript>=0.20.0",
+]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.1.0",
+    "mypy>=1.8.0",
+]
+all = ["swarmcode[train,parser,dev]"]
+
+[project.scripts]
+swarmcode = "swarmcode_cli.main:app"
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "swarmcode-cli/swarmcode_cli",
+    "swarmcode-agent/swarmcode_agent",
+    "swarmcode-trainer/swarmcode_trainer",
+    "swarmcode-registry/swarmcode_registry",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short"
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true

@@ -1,0 +1,41 @@
+# SwarmCode Train Configuration - Qwen 32B
+# Use: swarmcode train --config configs/train-32b.yaml
+# Requires ~48GB VRAM or multi-GPU setup
+
+model_name: "Qwen/Qwen2.5-Coder-32B-Instruct"
+dataset_path: "./data/training.jsonl"
+output_dir: "./artifacts"
+
+# QLoRA parameters
+lora_r: 64
+lora_alpha: 16
+lora_dropout: 0.1
+lora_target_modules:
+  - "q_proj"
+  - "k_proj"
+  - "v_proj"
+  - "o_proj"
+  - "gate_proj"
+  - "up_proj"
+  - "down_proj"
+
+# Training parameters - minimal batch size for largest model
+num_epochs: 3
+batch_size: 1
+gradient_accumulation_steps: 16
+learning_rate: 0.0001
+max_seq_length: 2048  # Reduced for memory
+warmup_ratio: 0.03
+weight_decay: 0.01
+
+# Quantization
+load_in_4bit: true
+bnb_4bit_compute_dtype: "bfloat16"
+bnb_4bit_quant_type: "nf4"
+
+# Misc
+seed: 42
+logging_steps: 10
+save_steps: 50
+use_wandb: false
+wandb_project: "swarmcode"

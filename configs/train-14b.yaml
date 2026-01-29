@@ -1,0 +1,41 @@
+# SwarmCode Train Configuration - Qwen 14B
+# Use: swarmcode train --config configs/train-14b.yaml
+# Requires ~24GB VRAM
+
+model_name: "Qwen/Qwen2.5-Coder-14B-Instruct"
+dataset_path: "./data/training.jsonl"
+output_dir: "./artifacts"
+
+# QLoRA parameters
+lora_r: 64
+lora_alpha: 16
+lora_dropout: 0.1
+lora_target_modules:
+  - "q_proj"
+  - "k_proj"
+  - "v_proj"
+  - "o_proj"
+  - "gate_proj"
+  - "up_proj"
+  - "down_proj"
+
+# Training parameters - reduced batch size for larger model
+num_epochs: 3
+batch_size: 2
+gradient_accumulation_steps: 8
+learning_rate: 0.0002
+max_seq_length: 4096
+warmup_ratio: 0.03
+weight_decay: 0.01
+
+# Quantization
+load_in_4bit: true
+bnb_4bit_compute_dtype: "bfloat16"
+bnb_4bit_quant_type: "nf4"
+
+# Misc
+seed: 42
+logging_steps: 10
+save_steps: 100
+use_wandb: false
+wandb_project: "swarmcode"

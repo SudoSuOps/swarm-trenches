@@ -1,0 +1,12 @@
+# SwarmCode Serve Configuration
+# Use: swarmcode serve --config configs/serve.yaml
+
+host: "0.0.0.0"
+port: 8000
+adapter_path: "./artifacts/swarmcode_adapter"
+base_model: "Qwen/Qwen2.5-Coder-7B-Instruct"
+max_tokens: 4096
+temperature: 0.1
+workspace_dir: "./workspace"
+enable_tools: true
+tool_timeout: 60

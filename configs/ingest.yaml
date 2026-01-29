@@ -1,0 +1,42 @@
+# SwarmCode Ingest Configuration
+# Use: swarmcode ingest --config configs/ingest.yaml
+
+source: "https://github.com/your-org/your-repo.git"
+output_dir: "./data/snapshots"
+branch: "main"
+depth: 0  # 0 for full history
+
+exclude_patterns:
+  - "*.pyc"
+  - "__pycache__"
+  - ".git"
+  - "node_modules"
+  - ".venv"
+  - "venv"
+  - "*.egg-info"
+  - "dist"
+  - "build"
+  - ".pytest_cache"
+  - ".mypy_cache"
+  - "*.log"
+
+max_file_size_kb: 500
+
+include_extensions:
+  - ".py"
+  - ".js"
+  - ".ts"
+  - ".tsx"
+  - ".jsx"
+  - ".go"
+  - ".rs"
+  - ".java"
+  - ".cpp"
+  - ".c"
+  - ".h"
+  - ".hpp"
+  - ".md"
+  - ".yaml"
+  - ".yml"
+  - ".json"
+  - ".toml"
