@@ -166,11 +166,25 @@ class RepositoryIngester:
 
         logger.info(f"Cloning {url} to {temp_dir}")
 
-        clone_kwargs = {"branch": self.config.branch}
+        clone_kwargs = {}
         if self.config.depth > 0:
             clone_kwargs["depth"] = self.config.depth
 
-        git.Repo.clone_from(url, temp_dir, **clone_kwargs)
+        # Try with specified branch first, fall back to default branch
+        try:
+            clone_kwargs["branch"] = self.config.branch
+            git.Repo.clone_from(url, temp_dir, **clone_kwargs)
+        except git.GitCommandError as e:
+            if "not found" in str(e).lower():
+                # Branch not found, try without specifying branch (use default)
+                logger.info(f"Branch '{self.config.branch}' not found, using default branch")
+                shutil.rmtree(temp_dir, ignore_errors=True)
+                temp_dir = Path(tempfile.mkdtemp(prefix="swarmcode_"))
+                clone_kwargs.pop("branch", None)
+                git.Repo.clone_from(url, temp_dir, **clone_kwargs)
+            else:
+                raise
+
         return temp_dir
 
     def _process_repo(self, repo_path: Path) -> IngestResult:
